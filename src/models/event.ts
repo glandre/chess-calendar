@@ -5,7 +5,13 @@ export interface Event {
 	parsedDate: Date;
 }
 
-export const eventToString = (e: Event) => `${e.title}\nDates: ${e.originalDate}\nDescription:\n${e.description}`;
+export const eventToString = (e: Event) => `${e.title}
+Dates: ${e.originalDate}
+[Parsed: ${e.parsedDate}]
+
+Description:
+
+${e.description}`;
 
 export function isValidEvent(e: Event | Partial<Event> | null | undefined): e is Event {
 	if (e === null || e === undefined) {

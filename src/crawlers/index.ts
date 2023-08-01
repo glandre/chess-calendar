@@ -1,5 +1,5 @@
-import { crawl } from './chess-bc-ca'
+import { crawler } from './chess-bc-ca'
 
-const crawlers = [crawl];
+const crawlers = [crawler];
 
 export default crawlers

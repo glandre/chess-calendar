@@ -4,42 +4,38 @@
 import fetch from 'node-fetch';
 import jsdom from 'jsdom';
 import * as chrono from 'chrono-node';
-import { Event, eventToString, isValidEvent } from '../models/event';
+import { Event, isValidEvent } from '../models/event';
+import { Crawler } from './types';
 
 const URL = 'https://www.chess.bc.ca/events.php'
 
-export async function crawl() {
-	// download chess.bc events page
-	const response = await fetch(URL);
+export const crawler: Crawler = {
+	name: 'BC Chess Federation Events Page',
+	url: URL,
+	async crawl() {
+		const events: Event[] = [];
 
-	// parse events: load JSDOM and query the expected elements
-	const dom = new jsdom.JSDOM(await response.text());
+		// download chess.bc events page
+		const response = await fetch(URL);
 
-	const events: Event[] = [];
-	// After "Tournament and Events"
-	// find each <p> until the end
-	const paragraphs = dom.window.document.querySelectorAll('#bodyTextStuff > p');
+		// parse events: load JSDOM and query the expected elements
+		const dom = new jsdom.JSDOM(await response.text());
 
-	paragraphs.forEach(p => {
-		const event = convertParagraphToEvent(p);
-		if (!event) {
-			console.error('\n\nParse error on: ' + p.textContent)
-		} else {
-			events.push(event)
-		}
-	});
+		
 
-	// insert events in a calendar file
-	console.log(`>>> ${events.length} event(s) found:`);
-	events.forEach(ev => {
-		console.log('######');
-		console.log(eventToString(ev))
-		console.log('Parsed Date: ' + ev.parsedDate);
-		console.log( '######\n\n');
-	});
+		const paragraphs = dom.window.document.querySelectorAll('#bodyTextStuff > p');
 
-	// publish calendar
-	// TODO
+		paragraphs.forEach(p => {
+			const event = convertParagraphToEvent(p);
+			if (!event) {
+				console.error('\n\nParse error on: ' + p.textContent)
+			} else {
+				events.push(event)
+			}
+		});
+
+		return events;
+	}
 }
 
 function convertParagraphToEvent(paragraph: Node): Event | null {
