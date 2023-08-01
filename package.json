@@ -1,0 +1,28 @@
+{
+  "name": "chess-calendar",
+  "version": "0.1.0",
+  "description": "Job to periodically crawl for chess events and feed a public calendar",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsc-watch --onSuccess \"npm start\"",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./dist"
+  },
+  "keywords": [
+    "chess",
+    "crawl"
+  ],
+  "author": "Geraldo B. Landre",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jsdom": "^21.1.1",
+    "@types/node-fetch": "^2.6.4",
+    "tsc-watch": "^6.0.4",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "chrono-node": "^2.6.4",
+    "jsdom": "^22.1.0",
+    "node-fetch": "^2.6.12"
+  }
+}
