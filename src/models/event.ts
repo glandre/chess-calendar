@@ -11,7 +11,8 @@ Dates: ${e.originalDate}
 
 Description:
 
-${e.description}`;
+${e.description}
+`;
 
 export function isValidEvent(e: Event | Partial<Event> | null | undefined): e is Event {
 	if (e === null || e === undefined) {
